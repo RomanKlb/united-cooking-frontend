@@ -1,38 +1,43 @@
 <nav ngxNavbarDynamicExpand class="navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Bootstrap 5</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        (click)="collapse.toggle()"
-        aria-controls="main-nav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span
-          class="
+        <a class="navbar-brand" href="#">Bootstrap 5</a>
+        <button class="navbar-toggler" type="button" (click)="collapse.toggle()" aria-controls="main-nav"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="
             navbar-toggler-icon
             d-flex
             align-items-center
             justify-content-center
-          "
-        >
-        </span>
-      </button>
-      <ngx-navbar-collapse id="main-nav" #collapse="ngxNavbarCollapse">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#"
-              >Home <span class="sr-only">(current)</span></a
-            >
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Some very long Link</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Some very long Link</a>
-          </li>
-        </ul>
-      </ngx-navbar-collapse>
+          ">
+            </span>
+        </button>
+        <ngx-navbar-collapse id="main-nav" #collapse="ngxNavbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="btn-group align-items-center justify-content-center" dropdown #dropdown="bs-dropdown" [autoClose]="true">
+                    <div dropdownToggle type="button" class="dropdown-toggle"
+                        aria-controls="dropdown-basic">
+                        Menu <span class="caret"></span>
+                    </div>
+                    <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu"
+                        aria-labelledby="button-basic">
+                        <li role="menuitem"><a class="dropdown-item" href="#">File</a></li>
+                        <li role="menuitem"><a class="dropdown-item" href="#">Edit</a></li>
+                        <li role="menuitem"><a class="dropdown-item" href="#">Search</a></li>
+                        <li class="divider dropdown-divider"></li>
+                        <li role="menuitem"><a class="dropdown-item" href="#">Recents</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Some very long Link</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Some very long Link</a>
+                </li>
+            </ul>
+        </ngx-navbar-collapse>
     </div>
-  </nav>
+</nav>
