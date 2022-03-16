@@ -11,6 +11,10 @@ import { LoginComponent } from './home/login/login.component';
 import { NgxNavbarModule } from 'ngx-bootstrap-navbar';
 import { RouterModule } from '@angular/router';
 import { BsDropdownModule,BsDropdownConfig } from 'ngx-bootstrap/dropdown';
+import { authInterceptorProviders } from './_common/_helpers/auth-interceptor';
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -26,9 +30,12 @@ import { BsDropdownModule,BsDropdownConfig } from 'ngx-bootstrap/dropdown';
     BrowserAnimationsModule,
     NgxNavbarModule,
     BsDropdownModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    FontAwesomeModule,
     RouterModule.forRoot(routes ,{ useHash: true })
   ],
-  providers: [BsDropdownConfig],
+  providers: [BsDropdownConfig, authInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

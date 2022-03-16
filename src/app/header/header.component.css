@@ -1,0 +1,8 @@
+.container-new {
+    justify-content: flex-end;
+    padding-right: var(--bs-gutter-x,.75rem);
+}
+
+.ecart {
+    padding-right: var(--bs-gutter-x,1rem);
+}
