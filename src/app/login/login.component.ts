@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { LoginResponse } from 'src/app/_common/_models/login/login-response';
 import { SignInRequest } from 'src/app/_common/_models/login/sign-in-request';
 import { AuthService } from 'src/app/_common/_services/auth.service';
 import { TokenStorageService } from 'src/app/_common/_services/token-storage.service';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-login',
@@ -14,19 +15,22 @@ export class LoginComponent implements OnInit {
 
   signInRequest: SignInRequest = new SignInRequest();
 
+
   profileForm = this.fb.group({
     pseudo: ['', [Validators.required]],
     password: ['', [Validators.required]]
   });
 
-  isLoggedIn = false;
+  isLoggedIn!: boolean;
+
   isLoginFailed = false;
   errorMessage = '';
   roles: string[] = [];
 
   constructor(private fb: FormBuilder,
     private tokenStorage: TokenStorageService,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private navbar:HeaderComponent) { }
 
   ngOnInit(): void {
     if (this.tokenStorage.getToken()) {
@@ -46,7 +50,8 @@ export class LoginComponent implements OnInit {
   }
 
   private errorSignIn = (error: Error): void => {
-    this.errorMessage = error.message;
+    // this.errorMessage = error.message;
+    this.errorMessage = 'login error'
     this.isLoginFailed = true;
   };
 
@@ -56,19 +61,21 @@ export class LoginComponent implements OnInit {
     this.isLoginFailed = false;
     this.isLoggedIn = true;
     this.roles = this.tokenStorage.getUser().roles;
-    this.reloadPage();
+
+    // wtf navbar reload
+    this.navbar.ngOnInit();
   }
 
   get pseudoForm(): FormControl {
-    return this.profileForm.get('pseudo') as FormControl;
-  }
+  return this.profileForm.get('pseudo') as FormControl;
+}
   get passwordForm(): FormControl {
-    return this.profileForm.get('password') as FormControl;
-  }
+  return this.profileForm.get('password') as FormControl;
+}
 
-  logout(): void {
-    this.tokenStorage.signOut();
-    window.location.reload();
-  }
+logout(): void {
+  this.tokenStorage.signOut();
+  window.location.reload();
+}
 
 }

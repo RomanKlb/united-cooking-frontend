@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { faHiking, faUser } from '@fortawesome/free-solid-svg-icons'
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { TokenStorageService } from '../_common/_services/token-storage.service';
+import { LoginComponent } from '../login/login.component';
 
 
 @Component({
@@ -13,14 +14,18 @@ export class HeaderComponent implements OnInit {
 
   user: any;
   private roles: string[] = [];
-  isLoggedIn = false;
+
+  isLoggedIn!: boolean;
+
   showAdminBoard = false;
   showMemberBoard = false;
   pseudo?: string;
 
   constructor(private library: FaIconLibrary,
     private tokenStorageService: TokenStorageService) {
-    library.addIcons(faHiking, faUser); }
+    library.addIcons(faHiking, faUser);
+
+  }
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();

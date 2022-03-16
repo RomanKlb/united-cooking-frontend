@@ -1,0 +1,111 @@
+<!-- <div class="container w-25">
+    <div class="row">
+        <form *ngIf="!isLoggedIn" class="border border-2 rounded p-3" [formGroup]="profileForm"
+            (ngSubmit)="formSending()">
+            <fieldset>
+                <div class="form-group">
+                    <label class="form-label">Pseudo</label>
+                    <input id="pseudo" type="text" name="pseudo" class="form-control" formControlName="pseudo" />
+                </div>
+                <div *ngIf="!pseudoForm.valid && (pseudoForm.dirty ||pseudoForm.touched)">
+                    <span class="error">
+                        Le pseudo est requis
+                    </span>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input id="password" type="password" name="password" class="form-control"
+                        formControlName="password" />
+                </div>
+                <div *ngIf="!passwordForm.valid && (passwordForm.dirty ||passwordForm.touched)">
+                    <div class="error">
+                        Le mot de passe est requis
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-around form-group mt-3">
+                    <button type="submit" class="btn btn-primary" routerLink="/signup">inscription</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!profileForm.valid">connexion</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+    <div class="row form-text text-muted alert-danger">
+        <small class="" style="margin-top: -10px;" role="alert" *ngIf="isLoginFailed">
+            Connexion refusée : {{ errorMessage }}
+        </small>
+    </div>
+
+    <div class="container">
+        <div class="row" *ngIf="isLoggedIn">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="alert alert-success" style="font-size: large;">
+                    Bienvenue {{ signInRequest?.pseudo}}!
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+
+        <div class="row" *ngIf="isLoggedIn">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="">
+                    <button class="btn btn-danger btn-block" (click)="logout()">Ce n'est pas vous ?</button>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+
+</div> -->
+
+<form *ngIf="!isLoggedIn" class="px-4 py-3" [formGroup]="profileForm" (ngSubmit)="formSending()">
+    <div class="form-group">
+        <label for="exampleDropdownFormEmail1">Pseudo</label>
+        <input id="pseudo" type="text" name="pseudo" class="form-control" formControlName="pseudo" placeholder="" />
+    </div>
+    <div *ngIf="!pseudoForm.valid && (pseudoForm.dirty ||pseudoForm.touched)">
+        <span class="error">
+            Le pseudo est requis
+        </span>
+    </div>
+    <div class="form-group">
+        <label for="exampleDropdownFormPassword1">Password</label>
+        <input id="password" type="password" name="password" class="form-control" formControlName="password" />
+    </div>
+    <div *ngIf="!passwordForm.valid && (passwordForm.dirty ||passwordForm.touched)">
+        <div class="error">
+            Le mot de passe est requis
+        </div>
+    </div>
+    <!-- <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="dropdownCheck">
+        <label class="form-check-label" for="dropdownCheck">
+            Remember me
+        </label>
+    </div> -->
+    <button type="submit" class="btn btn-primary mt-2" [disabled]="!profileForm.valid">Sign in</button>
+</form>
+<div class="dropdown-divider" *ngIf="!isLoggedIn"></div>
+<a class="dropdown-item" routerLink="/signup" *ngIf="!isLoggedIn">New around here? Sign up</a>
+<!-- <a class="dropdown-item" href="#">Forgot password?</a> -->
+
+
+<small class="text-center text-muted alert-danger " style="font-size: 10px;" role="alert" *ngIf="isLoginFailed">
+    Connexion refusée : {{ errorMessage }}
+</small>
+
+
+<div class="row mx-1" *ngIf="isLoggedIn">
+    <div class="alert alert-success text-center justify" style="font-size: large;">
+        Bienvenue {{ signInRequest?.pseudo}}!
+    </div>
+
+    <div class="row mx-1" *ngIf="isLoggedIn">
+
+        <button class="btn btn-danger btn-block" (click)="logout()">Ce n'est pas vous ?</button>
+
+    </div>
