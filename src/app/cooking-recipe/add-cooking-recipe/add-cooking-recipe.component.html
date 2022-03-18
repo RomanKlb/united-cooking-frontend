@@ -1,0 +1,81 @@
+<div class="container">
+    <h1 class="text-center">Ajout d'une recette</h1>
+    <br />
+
+    <form [formGroup]="addCookingRecipeForm" class="" (ngSubmit)="saveCookingRecipe()">
+        <div class="d-flex justify-content-around">
+            <div class="form-group w-50">
+                <label class="form-label" for="name">Name</label>
+                <input type="text" id="name" name="name" class="form-control" formControlName="name"
+                    class="form-control" />
+                <div *ngIf="!nameForm.valid && (nameForm.dirty || nameForm.touched)">
+                    <div class="error" [hidden]="!nameForm.errors?.['required']">
+                        Le nom est requis.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="d-flex justify-content-around">
+            <div class="form-group">
+                <label class="form-label" for="preparationTime">Temps de Préparation</label>
+                <input type="time" id="preparationTime" name="preparationTime" class="form-control"
+                    formControlName="preparationTime" class="form-control" />
+                <div *ngIf="!preparationTimeForm.valid && (preparationTimeForm.dirty || preparationTimeForm.touched)">
+                    <div class="error text-center" [hidden]="!preparationTimeForm.errors?.['required']">
+                        Requis.
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="cookingTime">Temps de cuisson</label>
+                <input type="time" id="cookingTime" name="cookingTime" class="form-control"
+                    formControlName="cookingTime" class="form-control" />
+                <div *ngIf="!cookingTimeForm.valid && (cookingTimeForm.dirty || cookingTimeForm.touched)">
+                    <div class="error text-center" [hidden]="!cookingTimeForm.errors?.['required']">
+                        Requis.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <label class="form-label" for="description">Description</label>
+            <textarea id="description" name="description" formControlName="description" class="form-control"
+                rows="10"></textarea>
+            <div *ngIf="!descriptionForm.valid && (descriptionForm.dirty || descriptionForm.touched)">
+                <div class="error" [hidden]="!descriptionForm.errors?.['required']">
+                    La description est requise.
+                </div>
+                <div class="error" [hidden]="!descriptionForm.errors?.['maxlength']">
+                    Un maximum de 10 000 caractères est attendu.
+                </div>
+            </div>
+        </div>
+        <br />
+<!-- 
+        <ng-select-container [multi]="multi">
+            <ng-select-item *ngFor="let category of categories; let i = index;" [value]="category.id">{{category.nom}}
+            </ng-select-item>
+        </ng-select-container>
+        <div>
+            <input type="checkbox" ngModel="multi" tabindex="-1">{{multi}}
+        </div> -->
+
+
+        <div class="d-flex justify-content-around form-group">
+            <input type="submit" class="btn mt-3 btn-success" value="Ajouter"
+                [disabled]="!addCookingRecipeForm.valid" />
+        </div>
+    </form>
+    <!-- <app-success-sign-up [message]="message" *ngIf="message!=='null'" (close)="handleSuccess()"></app-success-sign-up> -->
+
+    <!-- <span *ngIf="message!=='null'">{{message}}</span> -->
+
+    <!-- </div> -->
+    <!-- <div *ngIf="submitted">
+            <h4>CookingRecipe was submitted successfully!</h4>
+            <button class="btn btn-success" (click)="newCookingRecipe()">Add</button>
+        </div> -->
+
+</div>

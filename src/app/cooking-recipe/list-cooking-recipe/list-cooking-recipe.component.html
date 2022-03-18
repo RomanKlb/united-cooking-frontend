@@ -1,0 +1,39 @@
+<div class="container">
+    <div class="list row">
+        <div class="col-md-8">
+            <div class="input-group mb-3">
+                <button routerLink="add">ajouter </button>
+                <!-- <div>
+                    <input type="text" name="search" class="search-input" [(ngModel)]="filter" (ngModelChange)="updateFilter()">
+                </div> -->
+                <!-- <input
+          type="text"
+          class="form-control"
+          placeholder="Search by title"
+          [(ngModel)]="title"
+        />
+        <div class="input-group-append">
+          <button
+            class="btn btn-outline-secondary"
+            type="button"
+            (click)="searchTitle()"
+          >
+            Search
+          </button>
+        </div> -->
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h4>Mes recettes</h4>
+            <ul class="list-group">
+                <li class="list-group-item" *ngFor="let cookingRecipe of cookingRecipes; let i = index"
+                    [class.active]="i == currentIndex" (click)="setActiveCookingRecipe(cookingRecipe, i)">
+                    {{ cookingRecipe.name }}
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <app-details-cooking-recipe [viewMode]="true" [currentCookingRecipe]="currentCookingRecipe"></app-details-cooking-recipe>
+        </div>
+    </div>
+</div>

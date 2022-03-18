@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 import { faHiking, faUser } from '@fortawesome/free-solid-svg-icons'
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { TokenStorageService } from '../_common/_services/token-storage.service';
 import { LoginComponent } from '../login/login.component';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 
 @Component({
@@ -21,10 +22,13 @@ export class HeaderComponent implements OnInit {
   showMemberBoard = false;
   pseudo?: string;
 
-  constructor(private library: FaIconLibrary,
-    private tokenStorageService: TokenStorageService) {
-    library.addIcons(faHiking, faUser);
+  modalRef?: BsModalRef;
 
+  constructor(private library: FaIconLibrary,
+    private tokenStorageService: TokenStorageService,
+    private modalService: BsModalService
+    ) {
+    library.addIcons(faHiking, faUser);
   }
 
   ngOnInit(): void {
@@ -41,6 +45,19 @@ export class HeaderComponent implements OnInit {
   logout(): void {
     this.tokenStorageService.signOut();
     window.location.reload();
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+  }
+
+  confirm(): void {
+    this.logout();
+    this.modalRef?.hide();
+  }
+ 
+  decline(): void {
+    this.modalRef?.hide();
   }
 
 }

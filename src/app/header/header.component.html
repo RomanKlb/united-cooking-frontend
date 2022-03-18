@@ -1,6 +1,7 @@
-<nav ngxNavbarDynamicExpand class="navbar navbar-expand navbar-light bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand" routerLink=""><img src="http://placekitten.com/40/40"></a>
+<!-- <div class="container-fluid"> -->
+    <nav ngxNavbarDynamicExpand class="navbar navbar-expand navbar-light bg-light">
+
+        <a class="navbar-brand mr-3" routerLink=""><img src="http://placekitten.com/40/40"></a>
         <button class="navbar-toggler" type="button" (click)="collapse.toggle()" aria-controls="main-nav"
             aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon d-flex align-items-center justify-content-center"></span>
@@ -11,7 +12,7 @@
                     <a class="nav-link" routerLink="">Accueil <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="catalogue">Catalogue</a>
+                    <a class="nav-link" routerLink="catalogue" *ngIf="isLoggedIn">Catalogue</a>
                 </li>
             </ul>
         </ngx-navbar-collapse>
@@ -24,9 +25,9 @@
                     </div>
                     <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu"
                         aria-labelledby="button-basic">
-                        <li role="menuitem"><a class="dropdown-item" href="#">Mes recettes</a></li>
+                        <li role="menuitem"><a class="dropdown-item" routerLink="mes-recettes">Mes recettes</a></li>
                         <li class="divider dropdown-divider"></li>
-                        <li role="menuitem"><a class="dropdown-item" href="#">Mes avis</a></li>
+                        <li role="menuitem"><a class="dropdown-item" routerLink="mes-avis">Mes avis</a></li>
                     </ul>
                 </li>
 
@@ -37,13 +38,14 @@
                     </div>
                     <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu"
                         aria-labelledby="button-basic">
-                        <li role="menuitem"><a class="dropdown-item" href="#">Gestion des recettes</a></li>
+                        <li role="menuitem"><a class="dropdown-item" routerLink="gestion-des-recettes">Gestion des
+                                recettes</a></li>
                         <li class="divider dropdown-divider"></li>
-                        <li role="menuitem"><a class="dropdown-item" href="#">Gestion des avis</a>
+                        <li role="menuitem"><a class="dropdown-item" routerLink="gestion-des-avis">Gestion des avis</a>
                         </li>
                     </ul>
                 </li>
-                
+
                 <li class="btn-group align-items-center ecart" dropdown #dropdown="bs-dropdown" [autoClose]="false"
                     *ngIf="!isLoggedIn">
                     <div dropdownToggle type="button" class="dropdown-toggle" aria-controls="dropdown-basic">
@@ -58,19 +60,27 @@
                 <!-- <li class="nav-item ecart">
                     <a class="nav-link" routerLink="login" *ngIf="!isLoggedIn">login</a>
                 </li> -->
-                <li class="nav-item ecart text-success" *ngIf="isLoggedIn" >Bienvenue {{pseudo}}</li>
+                <li class="nav-item ecart text-success" *ngIf="isLoggedIn">Bienvenue {{pseudo}}</li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 <a class="nav-item  text-primary" *ngIf='!isLoggedIn'>
                     <fa-icon [icon]="['fas', 'user']" size="1x" style="color: red;"></fa-icon>
                 </a>
-                
-                <a class="nav-item text-primary text-center" *ngIf='isLoggedIn' (click)='logout()'>
+
+                <a class="nav-item text-primary text-center" *ngIf='isLoggedIn' (click)='openModal(template)'>
                     <fa-icon [icon]="['fas', 'user']" size="1x" style="color: green;"></fa-icon>
                 </a>
             </form>
         </ngx-navbar-collapse>
-    </div>
-</nav>
 
+    </nav>
+<!-- </div> -->
 <hr />
+
+<ng-template #template>
+    <div class="modal-body text-center">
+        <p>Voulez-vous vous déconnecter?</p>
+        <button type="button" class="btn btn-default" (click)="confirm()">Yes</button>
+        <button type="button" class="btn btn-primary" (click)="decline()">No</button>
+    </div>
+</ng-template>

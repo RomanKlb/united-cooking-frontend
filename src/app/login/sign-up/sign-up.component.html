@@ -1,0 +1,80 @@
+<h1 class="text-center" *ngIf="message === 'null'">Ajout d'un Membre</h1>
+<!-- <div class="container"> -->
+    <form [formGroup]="profileForm" class="" (ngSubmit)="formSending()" *ngIf="message === 'null'">
+
+        <!-- <input class="btn-xs btn-secondary" type="button" value="Insertion d'un joueur pour la démo"
+            (click)="createNewMember()" /> -->
+
+        <div class="form-group">
+            <label class="form-label" for="pseudo">Pseudo</label>
+            <input type="text" id="pseudo" name="pseudo" class="form-control" formControlName="pseudo"
+                class="form-control" />
+            <div *ngIf="!pseudoForm.valid && (pseudoForm.dirty || pseudoForm.touched)">
+                <div class="error" [hidden]="!pseudoForm.errors?.['required']">
+                    Le pseudo est requis.
+                </div>
+                <div class="error" [hidden]="!pseudoForm.errors?.['pattern']">
+                    Attention les symboles sont interdits !
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="email">Email</label>
+            <input type="text" id="email" name="email" class="form-control" formControlName="email"
+                class="form-control" />
+            <div *ngIf="!emailForm.valid && (emailForm.dirty || emailForm.touched)">
+                <div class="error" [hidden]="!emailForm.errors?.['required']">
+                    L'email est requis.
+                </div>
+                <div class="error" [hidden]="!emailForm.errors?.['email']">
+                    Exemple : abc@abc.abc
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="password">Password</label>
+            <input type="password" id="password" name="password" class="form-control" formControlName="password"
+                class="form-control" />
+            <div *ngIf="!passwordForm.valid && (passwordForm.dirty || passwordForm.touched)">
+                <div class="error" [hidden]="!passwordForm.errors?.['required']">
+                    Le mot de passe est requis.
+                </div>
+                <div class="error" [hidden]="!passwordForm.errors?.['minlength']">
+                    Un minimum de 6 caractères est attendu.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="name">Name</label>
+            <input type="text" id="name" name="name" class="form-control" formControlName="name"
+                class="form-control" />
+            <div *ngIf="!nameForm.valid && (nameForm.dirty || nameForm.touched)">
+                <div class="error" [hidden]="!nameForm.errors?.['required']">
+                    Le nom est requis.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="surname">Surname</label>
+            <input type="text" id="surname" name="surname" class="form-control" formControlName="surname"
+                class="form-control" />
+            <div *ngIf="!surnameForm.valid && (surnameForm.dirty || surnameForm.touched)">
+                <div class="error" [hidden]="!surnameForm.errors?.['required']">
+                    Le prénom est requis.
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-around form-group">
+            <input type="submit" class="btn mt-3 btn-success" value="Valider" [disabled]="!profileForm.valid" />
+        </div>
+    </form>
+    <!-- <app-success-sign-up [message]="message" *ngIf="message!=='null'" (close)="handleSuccess()"></app-success-sign-up> -->
+
+    <span *ngIf="message!=='null'">{{message}}</span>
+
+<!-- </div> -->

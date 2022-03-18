@@ -1,10 +1,12 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { BsModalService } from 'ngx-bootstrap/modal';
 import { LoginResponse } from 'src/app/_common/_models/login/login-response';
 import { SignInRequest } from 'src/app/_common/_models/login/sign-in-request';
 import { AuthService } from 'src/app/_common/_services/auth.service';
 import { TokenStorageService } from 'src/app/_common/_services/token-storage.service';
 import { HeaderComponent } from '../header/header.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
 
 @Component({
   selector: 'app-login',
@@ -30,7 +32,13 @@ export class LoginComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private tokenStorage: TokenStorageService,
     private authService: AuthService,
-    private navbar:HeaderComponent) { }
+    private navbar: HeaderComponent,
+    private modalService: BsModalService
+  ) { }
+
+  openModal() {
+    this.modalService.show(SignUpComponent);
+  }
 
   ngOnInit(): void {
     if (this.tokenStorage.getToken()) {
@@ -67,15 +75,15 @@ export class LoginComponent implements OnInit {
   }
 
   get pseudoForm(): FormControl {
-  return this.profileForm.get('pseudo') as FormControl;
-}
+    return this.profileForm.get('pseudo') as FormControl;
+  }
   get passwordForm(): FormControl {
-  return this.profileForm.get('password') as FormControl;
-}
+    return this.profileForm.get('password') as FormControl;
+  }
 
-logout(): void {
-  this.tokenStorage.signOut();
-  window.location.reload();
-}
+  logout(): void {
+    this.tokenStorage.signOut();
+    window.location.reload();
+  }
 
 }

@@ -16,6 +16,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CatalogueComponent } from './catalogue/catalogue.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { SignUpComponent } from './login/sign-up/sign-up.component';
+import { AddCookingRecipeComponent } from './cooking-recipe/add-cooking-recipe/add-cooking-recipe.component';
+import { DetailsCookingRecipeComponent } from './cooking-recipe/details-cooking-recipe/details-cooking-recipe.component';
+import { ListCookingRecipeComponent } from './cooking-recipe/list-cooking-recipe/list-cooking-recipe.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +28,11 @@ import { CatalogueComponent } from './catalogue/catalogue.component';
     HomeComponent,
     HeaderComponent,
     LoginComponent,
-    CatalogueComponent
+    CatalogueComponent,
+    SignUpComponent,
+    AddCookingRecipeComponent,
+    DetailsCookingRecipeComponent,
+    ListCookingRecipeComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,6 +44,7 @@ import { CatalogueComponent } from './catalogue/catalogue.component';
     HttpClientModule,
     ReactiveFormsModule,
     FontAwesomeModule,
+    ModalModule.forRoot(),
     RouterModule.forRoot(routes ,{ useHash: true })
   ],
   providers: [BsDropdownConfig, authInterceptorProviders],
