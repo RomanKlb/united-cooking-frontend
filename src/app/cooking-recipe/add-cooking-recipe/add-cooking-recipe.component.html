@@ -9,9 +9,9 @@
                 <input type="text" id="name" name="name" class="form-control" formControlName="name"
                     class="form-control" />
                 <div *ngIf="!nameForm.valid && (nameForm.dirty || nameForm.touched)">
-                    <div class="error" [hidden]="!nameForm.errors?.['required']">
+                    <small class="error" [hidden]="!nameForm.errors?.['required']">
                         Le nom est requis.
-                    </div>
+                    </small>
                 </div>
             </div>
         </div>
@@ -22,9 +22,9 @@
                 <input type="time" id="preparationTime" name="preparationTime" class="form-control"
                     formControlName="preparationTime" class="form-control" />
                 <div *ngIf="!preparationTimeForm.valid && (preparationTimeForm.dirty || preparationTimeForm.touched)">
-                    <div class="error text-center" [hidden]="!preparationTimeForm.errors?.['required']">
+                    <small class="error text-center" [hidden]="!preparationTimeForm.errors?.['required']">
                         Requis.
-                    </div>
+                    </small>
                 </div>
             </div>
             <div class="form-group">
@@ -32,9 +32,9 @@
                 <input type="time" id="cookingTime" name="cookingTime" class="form-control"
                     formControlName="cookingTime" class="form-control" />
                 <div *ngIf="!cookingTimeForm.valid && (cookingTimeForm.dirty || cookingTimeForm.touched)">
-                    <div class="error text-center" [hidden]="!cookingTimeForm.errors?.['required']">
+                    <small class="error text-center" [hidden]="!cookingTimeForm.errors?.['required']">
                         Requis.
-                    </div>
+                    </small>
                 </div>
             </div>
         </div>
@@ -44,23 +44,53 @@
             <textarea id="description" name="description" formControlName="description" class="form-control"
                 rows="10"></textarea>
             <div *ngIf="!descriptionForm.valid && (descriptionForm.dirty || descriptionForm.touched)">
-                <div class="error" [hidden]="!descriptionForm.errors?.['required']">
+                <small class="error" [hidden]="!descriptionForm.errors?.['required']">
                     La description est requise.
-                </div>
-                <div class="error" [hidden]="!descriptionForm.errors?.['maxlength']">
+                </small>
+                <small class="error" [hidden]="!descriptionForm.errors?.['maxlength']">
                     Un maximum de 10 000 caractères est attendu.
-                </div>
+                </small>
             </div>
         </div>
         <br />
-<!-- 
-        <ng-select-container [multi]="multi">
-            <ng-select-item *ngFor="let category of categories; let i = index;" [value]="category.id">{{category.nom}}
-            </ng-select-item>
-        </ng-select-container>
-        <div>
-            <input type="checkbox" ngModel="multi" tabindex="-1">{{multi}}
-        </div> -->
+
+        <div class="form-group">
+            <label class="form-label" for="categoryName">Catégorie</label>
+            <select formControlName="categoryName" id="categoryName" name="categoryName" class="form-control">
+                <option value="">-- catégorie --</option>
+                <option *ngFor="let category of categories" [ngValue]="category">
+                    {{ category.name }}
+                </option>
+            </select>
+            <div *ngIf="!categoryForm.valid && (categoryForm.dirty || categoryForm.touched)">
+                <small class="error" [hidden]="!categoryForm.errors?.['required']">
+                    La catégorie est requise.
+                </small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="typeName">Type</label>
+            <select formControlName="typeName" id="typeName" name="typeName" class="form-control">
+                <option value="">-- type --</option>
+                <option *ngFor="let type of types" [ngValue]="type">
+                    {{ type.name }}
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="typeName">Type</label>
+            <ng-multiselect-dropdown [placeholder]="'-- ingredients --'" [settings]="dropdownSettings"
+                [data]="ingredients" formControlName="ingredientsName" (onSelect)="onSelectIngredient($event)"
+                (onSelectAll)="onSelectAllIngredient($event)" (onDeSelect)="onDeSelectIngredient($event)">
+            </ng-multiselect-dropdown>
+        </div>
+        <div *ngIf="!ingredientsForm.valid && (ingredientsForm.dirty || ingredientsForm.touched)">
+            <small class="error" [hidden]="!ingredientsForm.errors?.['required']">
+                La liste des ingrédients est requise.
+            </small>
+        </div>
 
 
         <div class="d-flex justify-content-around form-group">

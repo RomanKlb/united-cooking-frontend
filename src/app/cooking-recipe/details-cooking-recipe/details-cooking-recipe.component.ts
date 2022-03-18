@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CookingRecipeResponse } from 'src/app/_common/_models/cookingRecipe/cooking-recipe-response';
-import { CookingRecipeService } from 'src/app/_common/_services/cooking-recipe.service';
+import { CookingRecipeService } from 'src/app/_common/_services/_cooking-recipe/cooking-recipe.service';
 
 @Component({
   selector: 'app-details-cooking-recipe',

@@ -3,8 +3,8 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { LoginResponse } from 'src/app/_common/_models/login/login-response';
 import { SignInRequest } from 'src/app/_common/_models/login/sign-in-request';
-import { AuthService } from 'src/app/_common/_services/auth.service';
-import { TokenStorageService } from 'src/app/_common/_services/token-storage.service';
+import { AuthService } from 'src/app/_common/_services/_jwt/auth.service';
+import { TokenStorageService } from 'src/app/_common/_services/_jwt/token-storage.service';
 import { HeaderComponent } from '../header/header.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 

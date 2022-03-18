@@ -1,80 +1,78 @@
-<!-- <div class="container-fluid"> -->
-    <nav ngxNavbarDynamicExpand class="navbar navbar-expand navbar-light bg-light">
+<nav ngxNavbarDynamicExpand class="navbar navbar-expand navbar-light bg-light">
 
-        <a class="navbar-brand mr-3" routerLink=""><img src="http://placekitten.com/40/40"></a>
-        <button class="navbar-toggler" type="button" (click)="collapse.toggle()" aria-controls="main-nav"
-            aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon d-flex align-items-center justify-content-center"></span>
-        </button>
-        <ngx-navbar-collapse id="main-nav" #collapse="ngxNavbarCollapse">
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" routerLink="">Accueil <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="catalogue" *ngIf="isLoggedIn">Catalogue</a>
-                </li>
-            </ul>
-        </ngx-navbar-collapse>
-        <ngx-navbar-collapse id="main-nav" #collapse="ngxNavbarCollapse" class="container-new">
-            <ul class="navbar-nav">
-                <li class="btn-group align-items-center ecart" dropdown #dropdown="bs-dropdown" [autoClose]="true"
-                    *ngIf="showMemberBoard">
-                    <div dropdownToggle type="button" class="dropdown-toggle" aria-controls="dropdown-basic">
-                        Espace Membre
-                    </div>
-                    <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu"
-                        aria-labelledby="button-basic">
-                        <li role="menuitem"><a class="dropdown-item" routerLink="mes-recettes">Mes recettes</a></li>
-                        <li class="divider dropdown-divider"></li>
-                        <li role="menuitem"><a class="dropdown-item" routerLink="mes-avis">Mes avis</a></li>
-                    </ul>
-                </li>
+    <a class="navbar-brand ecartGauche " routerLink=""><img class="image"
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/170px-Apple_logo_black.svg.png"></a>
+    <button class="navbar-toggler" type="button" (click)="collapse.toggle()" aria-controls="main-nav"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon d-flex align-items-center justify-content-center"></span>
+    </button>
+    <ngx-navbar-collapse id="main-nav" #collapse="ngxNavbarCollapse">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" routerLink="">Accueil <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="catalogue" *ngIf="isLoggedIn">Catalogue</a>
+            </li>
+        </ul>
+    </ngx-navbar-collapse>
+    <ngx-navbar-collapse id="main-nav" #collapse="ngxNavbarCollapse" class="container-new">
+        <ul class="navbar-nav">
+            <li class="btn-group align-items-center ecart" dropdown #dropdown="bs-dropdown" [autoClose]="true"
+                *ngIf="showMemberBoard">
+                <div dropdownToggle type="button" class="dropdown-toggle" aria-controls="dropdown-basic">
+                    Espace Membre
+                </div>
+                <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+                    <li role="menuitem"><a class="dropdown-item" routerLink="mes-recettes">Mes recettes</a></li>
+                    <li class="divider dropdown-divider"></li>
+                    <li role="menuitem"><a class="dropdown-item" routerLink="mes-avis">Mes avis</a></li>
+                </ul>
+            </li>
 
-                <li class="btn-group align-items-center ecart" dropdown #dropdown="bs-dropdown" [autoClose]="true"
-                    *ngIf="showAdminBoard">
-                    <div dropdownToggle type="button" class="dropdown-toggle px-2" aria-controls="dropdown-basic">
-                        Espace Admin <span class="caret"></span>
-                    </div>
-                    <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu"
-                        aria-labelledby="button-basic">
-                        <li role="menuitem"><a class="dropdown-item" routerLink="gestion-des-recettes">Gestion des
-                                recettes</a></li>
-                        <li class="divider dropdown-divider"></li>
-                        <li role="menuitem"><a class="dropdown-item" routerLink="gestion-des-avis">Gestion des avis</a>
-                        </li>
-                    </ul>
-                </li>
+            <li class="btn-group align-items-center ecart" dropdown #dropdown="bs-dropdown" [autoClose]="true"
+                *ngIf="showAdminBoard">
+                <div dropdownToggle type="button" class="dropdown-toggle px-2" aria-controls="dropdown-basic">
+                    Espace Admin <span class="caret"></span>
+                </div>
+                <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+                    <li role="menuitem"><a class="dropdown-item" routerLink="gestion-des-recettes">Gestion des
+                            recettes</a></li>
+                    <li class="divider dropdown-divider"></li>
+                    <li role="menuitem"><a class="dropdown-item" routerLink="gestion-des-avis">Gestion des avis</a>
+                    </li>
+                </ul>
+            </li>
 
-                <li class="btn-group align-items-center ecart" dropdown #dropdown="bs-dropdown" [autoClose]="false"
-                    *ngIf="!isLoggedIn">
-                    <div dropdownToggle type="button" class="dropdown-toggle" aria-controls="dropdown-basic">
-                        Login
-                    </div>
-                    <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu"
-                        aria-labelledby="button-basic">
-                        <app-login></app-login>
+            <li class="btn-group align-items-center ecart" dropdown #dropdown="bs-dropdown" [autoClose]="false"
+                *ngIf="!isLoggedIn">
+                <div dropdownToggle type="button" class="dropdown-toggle" aria-controls="dropdown-basic">
+                    Login
+                </div>
+                <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu"
+                    aria-labelledby="button-basic">
+                    <app-login></app-login>
 
-                    </ul>
-                </li>
-                <!-- <li class="nav-item ecart">
+                </ul>
+            </li>
+            <!-- <li class="nav-item ecart">
                     <a class="nav-link" routerLink="login" *ngIf="!isLoggedIn">login</a>
                 </li> -->
-                <li class="nav-item ecart text-success" *ngIf="isLoggedIn">Bienvenue {{pseudo}}</li>
-            </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <a class="nav-item  text-primary" *ngIf='!isLoggedIn'>
-                    <fa-icon [icon]="['fas', 'user']" size="1x" style="color: red;"></fa-icon>
-                </a>
+            <li class="nav-item ecart text-success" *ngIf="isLoggedIn">Bienvenue {{pseudo}}</li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <a class="nav-item  text-primary" *ngIf='!isLoggedIn'>
+                <fa-icon [icon]="['fas', 'user']" size="1x" style="color: red;"></fa-icon>
+            </a>
 
-                <a class="nav-item text-primary text-center" *ngIf='isLoggedIn' (click)='openModal(template)'>
-                    <fa-icon [icon]="['fas', 'user']" size="1x" style="color: green;"></fa-icon>
-                </a>
-            </form>
-        </ngx-navbar-collapse>
+            <a class="nav-item text-primary text-center" *ngIf='isLoggedIn' (click)='openModal(template)'>
+                <fa-icon [icon]="['fas', 'user']" size="1x" style="color: green;"></fa-icon>
+            </a>
+        </form>
+    </ngx-navbar-collapse>
 
-    </nav>
-<!-- </div> -->
+</nav>
+
 <hr />
 
 <ng-template #template>

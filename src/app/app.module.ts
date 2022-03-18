@@ -21,6 +21,7 @@ import { SignUpComponent } from './login/sign-up/sign-up.component';
 import { AddCookingRecipeComponent } from './cooking-recipe/add-cooking-recipe/add-cooking-recipe.component';
 import { DetailsCookingRecipeComponent } from './cooking-recipe/details-cooking-recipe/details-cooking-recipe.component';
 import { ListCookingRecipeComponent } from './cooking-recipe/list-cooking-recipe/list-cooking-recipe.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { ListCookingRecipeComponent } from './cooking-recipe/list-cooking-recipe
     ReactiveFormsModule,
     FontAwesomeModule,
     ModalModule.forRoot(),
+    NgMultiSelectDropDownModule.forRoot(),
     RouterModule.forRoot(routes ,{ useHash: true })
   ],
   providers: [BsDropdownConfig, authInterceptorProviders],

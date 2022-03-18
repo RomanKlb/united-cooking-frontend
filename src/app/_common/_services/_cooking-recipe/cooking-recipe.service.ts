@@ -1,8 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CookingRecipeRequest } from '../_models/cookingRecipe/cooking-recipe-request';
-import { TokenStorageService } from './token-storage.service';
+import { CookingRecipeRequest } from '../../_models/cookingRecipe/cooking-recipe-request';
+import { TokenStorageService } from '../_jwt/token-storage.service';
+
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })

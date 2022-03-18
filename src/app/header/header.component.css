@@ -6,3 +6,12 @@
 .ecart {
     padding-right: var(--bs-gutter-x,1rem);
 }
+
+.ecartGauche {
+    padding-left: var(--bs-gutter-x,1rem);
+    display: flex;
+}
+
+.image {
+    height: 20px;
+}

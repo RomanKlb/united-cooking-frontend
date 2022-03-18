@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { SignUpMemberRequest } from 'src/app/_common/_models/login/sign-up-member-request';
-import { AuthService } from 'src/app/_common/_services/auth.service';
+import { AuthService } from 'src/app/_common/_services/_jwt/auth.service';
 
 
 @Component({

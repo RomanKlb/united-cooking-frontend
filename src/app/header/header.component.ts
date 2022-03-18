@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 import { faHiking, faUser } from '@fortawesome/free-solid-svg-icons'
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { TokenStorageService } from '../_common/_services/token-storage.service';
+import { TokenStorageService } from '../_common/_services/_jwt/token-storage.service';
 import { LoginComponent } from '../login/login.component';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
