@@ -19,6 +19,7 @@ export class CookingRecipeService {
 
     addCookingRecipe$(cookingRecipeReceipt: CookingRecipeRequest): Observable<any> {
       var uri = "unitedcooking/cooking-recipe/save";
+      console.log(cookingRecipeReceipt);
       return this.http.post<any>(uri, cookingRecipeReceipt, httpOptions);
     }
 

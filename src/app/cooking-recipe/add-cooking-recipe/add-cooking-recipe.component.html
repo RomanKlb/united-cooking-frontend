@@ -1,26 +1,23 @@
 <div class="container">
-    <h1 class="text-center">Ajout d'une recette</h1>
+    <h1 class="text-center" *ngIf="!submitted">Ajout d'une recette</h1>
     <br />
 
-    <form [formGroup]="addCookingRecipeForm" class="" (ngSubmit)="saveCookingRecipe()">
+    <form [formGroup]="addCookingRecipeForm" class="" *ngIf="!submitted" (ngSubmit)="saveCookingRecipe()">
         <div class="d-flex justify-content-around">
             <div class="form-group w-50">
                 <label class="form-label" for="name">Name</label>
-                <input type="text" id="name" name="name" class="form-control" formControlName="name"
-                    class="form-control" />
+                <input type="text" id="name" name="name" class="form-control" formControlName="name" />
                 <div *ngIf="!nameForm.valid && (nameForm.dirty || nameForm.touched)">
                     <small class="error" [hidden]="!nameForm.errors?.['required']">
                         Le nom est requis.
                     </small>
                 </div>
             </div>
-        </div>
-        <br />
-        <div class="d-flex justify-content-around">
+
             <div class="form-group">
-                <label class="form-label" for="preparationTime">Temps de Préparation</label>
+                <label class="form-label" for="preparationTime">Préparation</label>
                 <input type="time" id="preparationTime" name="preparationTime" class="form-control"
-                    formControlName="preparationTime" class="form-control" />
+                    formControlName="preparationTime" />
                 <div *ngIf="!preparationTimeForm.valid && (preparationTimeForm.dirty || preparationTimeForm.touched)">
                     <small class="error text-center" [hidden]="!preparationTimeForm.errors?.['required']">
                         Requis.
@@ -28,9 +25,9 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="form-label" for="cookingTime">Temps de cuisson</label>
+                <label class="form-label" for="cookingTime">Cuisson</label>
                 <input type="time" id="cookingTime" name="cookingTime" class="form-control"
-                    formControlName="cookingTime" class="form-control" />
+                    formControlName="cookingTime" />
                 <div *ngIf="!cookingTimeForm.valid && (cookingTimeForm.dirty || cookingTimeForm.touched)">
                     <small class="error text-center" [hidden]="!cookingTimeForm.errors?.['required']">
                         Requis.
@@ -38,6 +35,64 @@
                 </div>
             </div>
         </div>
+        <br />
+        <div class="d-flex justify-content-around">
+            <div class="form-group">
+                <label class="form-label" for="categoryName">Catégorie</label>
+                <select formControlName="categoryName" id="categoryName" name="categoryName" class="form-control">
+                    <option value="">--catégorie--</option>
+                    <option *ngFor="let categoryname of categories" [ngValue]="categoryname">
+                        {{ categoryname }}
+                    </option>
+                </select>
+                <div *ngIf="!categoryForm.valid && (categoryForm.dirty || categoryForm.touched)">
+                    <small class="error" [hidden]="!categoryForm.errors?.['required']">
+                        La catégorie est requise.
+                    </small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="typeName">Type</label>
+                <select formControlName="typeName" id="typeName" name="typeName" class="form-control">
+                    <option value="">--type--</option>
+                    <option *ngFor="let typename of types" [ngValue]="typename">
+                        {{ typename }}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-4">
+                <div class="form-group">
+                    <label class="form-label" for="ingredientsName">Ingredients</label>
+                    <ng-multiselect-dropdown [placeholder]="'--ingredients--'" [settings]="dropdownSettingsIngredients"
+                        [data]="ingredients" formControlName="ingredientsName" (onSelect)="onSelectIngredient($event)"
+                        (onDeSelect)="onDeSelectIngredient($event)">
+                    </ng-multiselect-dropdown>
+                </div>
+                <div *ngIf="!ingredientsForm.valid && (ingredientsForm.dirty || ingredientsForm.touched)">
+                    <small class="error" [hidden]="!ingredientsForm.errors?.['required']">
+                        La liste des ingrédients est requise.
+                    </small>
+                </div>
+            </div>
+            <div class="col-2"></div>
+            <div class="col-4">
+                <div class="form-group">
+                    <label class="form-label" for="devicesName">Appareils</label>
+                    <ng-multiselect-dropdown [placeholder]="'--appareils--'" [settings]="dropdownSettingsDevices"
+                        [data]="devices" formControlName="devicesName" (onSelect)="onSelectDevice($event)"
+                        (onDeSelect)="onDeSelectDevice($event)">
+                    </ng-multiselect-dropdown>
+                </div>
+                <div class="col-1"></div>
+            </div>
+        </div>
+
+
+
         <br />
         <div class="form-group">
             <label class="form-label" for="description">Description</label>
@@ -54,58 +109,27 @@
         </div>
         <br />
 
-        <div class="form-group">
-            <label class="form-label" for="categoryName">Catégorie</label>
-            <select formControlName="categoryName" id="categoryName" name="categoryName" class="form-control">
-                <option value="">-- catégorie --</option>
-                <option *ngFor="let category of categories" [ngValue]="category">
-                    {{ category.name }}
-                </option>
-            </select>
-            <div *ngIf="!categoryForm.valid && (categoryForm.dirty || categoryForm.touched)">
-                <small class="error" [hidden]="!categoryForm.errors?.['required']">
-                    La catégorie est requise.
-                </small>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="form-label" for="typeName">Type</label>
-            <select formControlName="typeName" id="typeName" name="typeName" class="form-control">
-                <option value="">-- type --</option>
-                <option *ngFor="let type of types" [ngValue]="type">
-                    {{ type.name }}
-                </option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label class="form-label" for="typeName">Type</label>
-            <ng-multiselect-dropdown [placeholder]="'-- ingredients --'" [settings]="dropdownSettings"
-                [data]="ingredients" formControlName="ingredientsName" (onSelect)="onSelectIngredient($event)"
-                (onSelectAll)="onSelectAllIngredient($event)" (onDeSelect)="onDeSelectIngredient($event)">
-            </ng-multiselect-dropdown>
-        </div>
-        <div *ngIf="!ingredientsForm.valid && (ingredientsForm.dirty || ingredientsForm.touched)">
-            <small class="error" [hidden]="!ingredientsForm.errors?.['required']">
-                La liste des ingrédients est requise.
-            </small>
-        </div>
-
-
         <div class="d-flex justify-content-around form-group">
             <input type="submit" class="btn mt-3 btn-success" value="Ajouter"
-                [disabled]="!addCookingRecipeForm.valid" />
+                [disabled]="!addCookingRecipeForm.valid" (click)="openModalCreateOk(template)"/>
         </div>
+        <br />
+
     </form>
-    <!-- <app-success-sign-up [message]="message" *ngIf="message!=='null'" (close)="handleSuccess()"></app-success-sign-up> -->
+    <button (click)="createRecette()">créer une recette test</button>
 
-    <!-- <span *ngIf="message!=='null'">{{message}}</span> -->
 
-    <!-- </div> -->
-    <!-- <div *ngIf="submitted">
-            <h4>CookingRecipe was submitted successfully!</h4>
-            <button class="btn btn-success" (click)="newCookingRecipe()">Add</button>
-        </div> -->
+    <ng-template #template>
+        <div class="modal-header">
+          <!-- <h4 class="modal-title pull-left"></h4> -->
+          <button type="button" class="close btn-close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+            <span aria-hidden="true" class="visually-hidden">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <h4 class="text-center" *ngIf="message !== 'Le nom de cette recette est déjà pris !'">La recette a bien été ajouté!</h4>
+            <h4 class="text-center text-danger" >{{message}}</h4>
+        </div>
+      </ng-template>
 
 </div>

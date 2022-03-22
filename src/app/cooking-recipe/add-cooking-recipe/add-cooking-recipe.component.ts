@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CookingRecipeRequest } from 'src/app/_common/_models/cookingRecipe/cooking-recipe-request';
 import { Member } from 'src/app/_common/_models/member';
@@ -13,6 +13,9 @@ import { Device } from 'src/app/_common/_models/device';
 import { Ingredient } from 'src/app/_common/_models/ingredient';
 import { IngredientService } from 'src/app/_common/_services/_ingredient/ingredient.service';
 import { DeviceService } from 'src/app/_common/_services/_device/device.service';
+import { LEADING_TRIVIA_CHARS } from '@angular/compiler/src/render3/view/template';
+import { Router } from '@angular/router';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-add-cooking-recipe',
@@ -22,21 +25,20 @@ import { DeviceService } from 'src/app/_common/_services/_device/device.service'
 export class AddCookingRecipeComponent implements OnInit {
 
   cookingRecipeDto!: CookingRecipeRequest;
-  categories!: Category[];
-  types!: Type[];
-  devices! : Device[];
-  ingredients! : Ingredient[];
+  categories!: string[];
+  types!: string[];
+  devices!: Device[];
+  ingredients!: Ingredient[];
 
-  ingredient! : Ingredient;
+  ingredient!: Ingredient;
 
   addCookingRecipeForm: FormGroup = this.fb.group({
     name: ['', Validators.required],
-    preparationTime: [, Validators.required],
+    preparationTime: ['', Validators.required],
     cookingTime: ['', Validators.required],
     description: ['', [Validators.required, Validators.maxLength(10000)]],
     categoryName: ['', Validators.required],
-    typeName: [''],
-    memberName: ['', Validators.required],
+    typeName: '',
     ingredientsName: [[], Validators.required],
     devicesName: [[]]
   });
@@ -44,63 +46,107 @@ export class AddCookingRecipeComponent implements OnInit {
   submitted = false;
   user!: Admin | Member
 
-  selectedIngredients:string[] = [];
-  selectedDevices = [];
-  deletedIngredients = [];
-  deletedDevices = [];
-  dropdownSettings = {};
+  selectedIngredients: string[] = [];
+  selectedDevices: string[] = [];
+  dropdownSettingsIngredients = {};
+  dropdownSettingsDevices = {};
 
+  message = "";
+
+  modalRef?: BsModalRef;
+  config = {
+    backdrop: true,
+    ignoreBackdropClick: false
+  };
 
   constructor(private cookingRecipeService: CookingRecipeService,
     private fb: FormBuilder,
     private tokenStorageService: TokenStorageService,
     private categoryService: CategoryService,
     private typeService: TypeService,
-    private ingredientService : IngredientService,
-    private deviceService : DeviceService
-    ) {
-      this.chargedCategories();
-      this.chargedTypes();
-      this.chargedDevices();
-      this.chargedIngredients();
-     }
+    private ingredientService: IngredientService,
+    private deviceService: DeviceService,
+    private router: Router,
+    private modalService: BsModalService
+  ) {
+    this.chargedCategories();
+    this.chargedTypes();
+    this.chargedDevices();
+    this.chargedIngredients();
+    this.chargedSettingsDropdownIngredients();
+    this.chargedSettingsDropdownDevices();
+  }
 
   ngOnInit(): void {
     this.user = this.tokenStorageService.getUser();
-   
-    this.dropdownSettings = {
-      singleSelection: false,
-      textField: 'name',
-      allowSearchFilter: true,
-      searchPlaceholderText: 'rechercher',
-      noFilteredDataAvailablePlaceholderText: 'Aucun ingrédient trouvé'
-    };
   }
 
   onSelectIngredient(item: any) {
     this.selectedIngredients.push(item.name);
     console.log(this.selectedIngredients)
+    return this.selectedIngredients;
   }
 
-  onDeSelectIngredient(item:any) {
+  onDeSelectIngredient(item: any) {
     this.selectedIngredients.splice(this.selectedIngredients.findIndex(x => x === item.name), 1)
     console.log(this.selectedIngredients);
   }
 
-  onSelectAllIngredient(items: any) {
-    console.log(items);
+  onSelectDevice(item: any) {
+    this.selectedDevices.push(item.name);
+    console.log(this.selectedDevices)
+  }
+
+  onDeSelectDevice(item: any) {
+    this.selectedDevices.splice(this.selectedDevices.findIndex(x => x === item.name), 1)
+    console.log(this.selectedDevices);
+  }
+
+  chargedSettingsDropdownIngredients() {
+    this.dropdownSettingsIngredients = {
+      singleSelection: false,
+      textField: 'name',
+      allowSearchFilter: true,
+      searchPlaceholderText: 'rechercher',
+      noFilteredDataAvailablePlaceholderText: 'Aucun ingrédient de ce nom',
+      noDataAvailablePlaceholderText: 'Aucun ingrédient trouvé',
+      enableCheckAll: false
+    };
+  }
+
+  chargedSettingsDropdownDevices() {
+    this.dropdownSettingsDevices = {
+      singleSelection: false,
+      textField: 'name',
+      allowSearchFilter: true,
+      searchPlaceholderText: 'rechercher',
+      noFilteredDataAvailablePlaceholderText: 'Aucun appareils trouvé',
+      enableCheckAll: false
+    };
+  }
+
+  openModalCreateOk(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template, this.config);
   }
 
   saveCookingRecipe(): void {
+    this.message = '';
     this.cookingRecipeDto = this.constructCookingRecipeDto();
+    console.log(this.cookingRecipeDto);
 
     this.cookingRecipeService.addCookingRecipe$(this.cookingRecipeDto)
       .subscribe({
         next: (res) => {
           console.log(res);
           this.submitted = true;
+          this.newCookingRecipe();
+          this.router.navigate(['mes-recettes']);
         },
-        error: (e) => console.error(e)
+        error: (e) => {
+          this.submitted = false;
+          this.message = e.error;
+          // this.reconstructCookingRecipeDto();
+        }
       });
   }
 
@@ -120,7 +166,7 @@ export class AddCookingRecipeComponent implements OnInit {
     return this.addCookingRecipeForm.get('categoryName') as FormControl;
   }
   get typeForm(): FormControl {
-    return this.addCookingRecipeForm.get('type') as FormControl;
+    return this.addCookingRecipeForm.get('typeName') as FormControl;
   }
   get ingredientsForm(): FormControl {
     return this.addCookingRecipeForm.get('ingredientsName') as FormControl;
@@ -138,24 +184,43 @@ export class AddCookingRecipeComponent implements OnInit {
       categoryName: this.categoryForm.value,
       typeName: this.typeForm.value,
       memberPseudo: this.user.pseudo,
-      ingredients: this.ingredientsForm.value,
-      devices: this.devicesForm.value
+      ingredients: this.selectedIngredients,
+      devices: this.selectedDevices
     }
+
   }
+  // reconstructCookingRecipeDto(): void {
+  //   this.addCookingRecipeForm.patchValue({
+  //     'name': this.nameForm.value,
+  //     'preparationTime': this.preparationTimeForm.value,
+  //     'cookingTime': this.cookingTimeForm.value,
+  //     'description': this.descriptionForm.value,
+  //     'categoryName':  this.categoryForm.value,
+  //     'typeName': this.typeForm.value,
+  //     'ingredientsName': this.selectedIngredients,
+  //     'devicesName': this.selectedDevices
+  //   })
+  // }
 
   chargedCategories(): any {
+    this.categories = [];
     return this.categoryService.recoveryCategories$().subscribe({
       next: (data) => {
-        this.categories = data;
+        data.forEach(((element: Category) => {
+          this.categories.push(element.name);
+        }));
       },
-      error: (e) => console.error(e)
+      error: (e: any) => console.error(e)
     });
   }
 
   chargedTypes(): any {
+    this.types = [];
     return this.typeService.recoveryTypes$().subscribe({
       next: (data) => {
-        this.types = data;
+        data.forEach(((element: Type) => {
+          this.types.push(element.name);
+        }));
       },
       error: (e) => console.error(e)
     });
@@ -181,12 +246,35 @@ export class AddCookingRecipeComponent implements OnInit {
     });
   }
 
-  // newCookingRecipe(): void {
-  //   this.submitted = false;
-  //   this.cookingRecipeDto = {
-  //     name: '',
-  //     description: '',
+  createRecette() {
+    this.selectedIngredients = ['Oignon', 'Lait'];
+    this.selectedDevices = ['Thermomix'];
 
-  //   };
-  // }
+    this.addCookingRecipeForm.patchValue({
+      'name': 'TEST',
+      'preparationTime': '00:45',
+      'cookingTime': '00:45',
+      'description': 'TEST TEST TEST',
+      'categoryName': 'Plat',
+      'typeName': 'Junk food',
+      'ingredientsName': ['Oignon', 'Lait'],
+      'devicesName': ['Thermomix']
+    })
+    console.log(this.addCookingRecipeForm.value)
+  }
+
+  newCookingRecipe(): void {
+    this.submitted = false;
+    this.addCookingRecipeForm.patchValue({
+      'name': '',
+      'preparationTime': '',
+      'cookingTime': '',
+      'description': '',
+      'categoryName': '',
+      'typeName': '',
+      'ingredientsName': [],
+      'devicesName': []
+    })
+  }
+
 }

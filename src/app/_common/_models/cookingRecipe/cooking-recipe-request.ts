@@ -2,8 +2,8 @@ import { Time } from "@angular/common";
 
 export interface CookingRecipeRequest {
 	name:string;
-	preparationTime:Time;
-    cookingTime:Time;
+	preparationTime:string;
+    cookingTime:string;
 	description:string;
     categoryName:string;
     typeName:string;

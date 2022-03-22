@@ -7,8 +7,7 @@
 
         <div class="form-group">
             <label class="form-label" for="pseudo">Pseudo</label>
-            <input type="text" id="pseudo" name="pseudo" class="form-control" formControlName="pseudo"
-                class="form-control" />
+            <input type="text" id="pseudo" name="pseudo" class="form-control" formControlName="pseudo"/>
             <div *ngIf="!pseudoForm.valid && (pseudoForm.dirty || pseudoForm.touched)">
                 <small class="error" [hidden]="!pseudoForm.errors?.['required']">
                     Le pseudo est requis.
@@ -21,8 +20,7 @@
 
         <div class="form-group">
             <label class="form-label" for="email">Email</label>
-            <input type="text" id="email" name="email" class="form-control" formControlName="email"
-                class="form-control" />
+            <input type="text" id="email" name="email" class="form-control" formControlName="email"/>
             <div *ngIf="!emailForm.valid && (emailForm.dirty || emailForm.touched)">
                 <small class="error" [hidden]="!emailForm.errors?.['required']">
                     L'email est requis.
@@ -35,8 +33,7 @@
 
         <div class="form-group">
             <label class="form-label" for="password">Password</label>
-            <input type="password" id="password" name="password" class="form-control" formControlName="password"
-                class="form-control" />
+            <input type="password" id="password" name="password" class="form-control" formControlName="password"/>
             <div *ngIf="!passwordForm.valid && (passwordForm.dirty || passwordForm.touched)">
                 <small class="error" [hidden]="!passwordForm.errors?.['required']">
                     Le mot de passe est requis.
@@ -49,8 +46,7 @@
 
         <div class="form-group">
             <label class="form-label" for="name">Name</label>
-            <input type="text" id="name" name="name" class="form-control" formControlName="name"
-                class="form-control" />
+            <input type="text" id="name" name="name" class="form-control" formControlName="name"/>
             <div *ngIf="!nameForm.valid && (nameForm.dirty || nameForm.touched)">
                 <small class="error" [hidden]="!nameForm.errors?.['required']">
                     Le nom est requis.
@@ -60,8 +56,7 @@
 
         <div class="form-group">
             <label class="form-label" for="surname">Surname</label>
-            <input type="text" id="surname" name="surname" class="form-control" formControlName="surname"
-                class="form-control" />
+            <input type="text" id="surname" name="surname" class="form-control" formControlName="surname"/>
             <div *ngIf="!surnameForm.valid && (surnameForm.dirty || surnameForm.touched)">
                 <small class="error" [hidden]="!surnameForm.errors?.['required']">
                     Le prénom est requis.
